@@ -1,0 +1,35 @@
+[
+  {
+    "_id": {
+      "id": "1",
+      "$oid": "63df4b91b4b63e35a94d0ec0"
+    },
+
+    "name": "Computer"
+  },
+  {
+    "_id": {
+      "id": "2",
+      "$oid": "63df4b91b4b63e35a94d0ec2"
+    },
+
+    "name": "Phone"
+  },
+
+  {
+    "_id": {
+      "id": "3",
+      "$oid": "6"
+    },
+
+    "name": "Car"
+  },
+  {
+    "_id": {
+      "id": "4",
+      "$oid": "63df4b91b4b63e35a94d001"
+    },
+
+    "name": "Game"
+  }
+]
