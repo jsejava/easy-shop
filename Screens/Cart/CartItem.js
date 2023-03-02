@@ -40,13 +40,13 @@ export default CartItem;
 
 const styles = StyleSheet.create({
   ListItem: {
-    alignItems: "center ",
+    alignItems: "center",
     backgroundColor: "white",
     justifyContent: "center",
   },
   body: {
     margin: 10,
-    alignItems: "center ",
+    alignItems: "center",
     flexDirection: "row",
   },
 });

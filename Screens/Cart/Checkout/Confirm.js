@@ -10,17 +10,46 @@ import React from "react";
 import * as action from "../../../Redux/Actions/cartActions";
 import { Body, Left, ListItem, Right, Thumbnail } from "native-base";
 import { connect } from "react-redux";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
+import baseURL from "../../../assets/common/baseUrl";
+import axios from "axios";
 
 var { height, width } = Dimensions.get("window");
 
 const Confirm = (props) => {
+  const finalOrder = props.route.params;
+
   const confirmOrder = () => {
-    setTimeout(() => {
-      props.clearCart();
-      props.navigation.navigate("Cart");
-    }, 500);
+    const finalOrder = props.route.params;
+    const order = finalOrder.order.order;
+
+    axios
+      .post(`${baseURL}orders`, order)
+      .then((res) => {
+        if (res.status == 200 || res.status == 201) {
+          Toast.show({
+            topOffset: 60,
+            type: "success",
+            text1: "Order Completed",
+            text2: "",
+          });
+          setTimeout(() => {
+            props.clearCart();
+            props.navigation.navigate("Cart");
+          }, 500);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        Toast.show({
+          topOffset: 60,
+          type: "error",
+          text1: "Something went wrong",
+          text2: "Please try again",
+        });
+      });
   };
-  const confirm = props.route.params;
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.titleContainer}>
@@ -34,14 +63,14 @@ const Confirm = (props) => {
           >
             <Text style={styles.title}>Shipping To:</Text>
             <View style={{ padding: 8 }}>
-              <Text>Address: {confirm.order.order.shippingAdrress1}</Text>
-              <Text>Address2: {confirm.order.order.shippingAdrress2}</Text>
-              <Text>City: {confirm.order.order.city}</Text>
-              <Text>Zip Code: {confirm.order.order.zip}</Text>
-              <Text>country: {confirm.order.order.country}</Text>
+              <Text>Address: {finalOrder.order.order.shippingAdrress1}</Text>
+              <Text>Address2: {finalOrder.order.order.shippingAdrress2}</Text>
+              <Text>City: {finalOrder.order.order.city}</Text>
+              <Text>Zip Code: {finalOrder.order.order.zip}</Text>
+              <Text>country: {finalOrder.order.order.country}</Text>
             </View>
             <Text style={styles.title}>Items:</Text>
-            {confirm.order.order.orderItems.map((x) => {
+            {finalOrder.order.order.orderItems.map((x) => {
               return (
                 <ListItem style={styles.ListItem} key={x.product.name} avatar>
                   <Left>

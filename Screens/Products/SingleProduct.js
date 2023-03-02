@@ -1,14 +1,35 @@
 import { Image, StyleSheet, Text, View, Button } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Toast from "react-native-toast-message";
 import { Container, H1, Left, Right } from "native-base";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import * as actions from "../../Redux/Actions/cartActions";
+import EasyButton from "../Shared/StyledComponents/EasyButton";
+import TrafficLight from "../Shared/StyledComponents/TraffictLight";
 
 const SingleProduct = (props) => {
   const [item, setItem] = useState(props.route.params.item);
-  const [available, setAvailable] = useState("");
+  const [availability, setAvailability] = useState(null);
+  const [availabilityTest, setAvailabilityTest] = useState("");
+
+  useEffect(() => {
+    if (props.route.params.item.countInStock == 0) {
+      setAvailability(<TrafficLight unavailable></TrafficLight>);
+      setAvailabilityTest("Unvailable");
+    } else if (props.route.params.item.countInStock <= 5) {
+      setAvailability(<TrafficLight limited></TrafficLight>);
+      setAvailabilityTest("Limited Stock");
+    } else {
+      setAvailability(<TrafficLight available></TrafficLight>);
+      setAvailabilityTest("Available");
+    }
+    return () => {
+      setAvailability(null);
+      setAvailabilityTest("");
+    };
+  }, []);
+
   return (
     <Container style={styles.container}>
       <ScrollView style={{ marginBottom: 80, padding: 5 }}>
@@ -27,15 +48,24 @@ const SingleProduct = (props) => {
           <H1 style={styles.contentHeader}>{item.name}</H1>
           <Text style={styles.contentText}>{item.brand}</Text>
         </View>
-        {/* TODO: description, Rich description and Availability */}
+        <View style={styles.availabilityContainer}>
+          <View style={styles.availability}>
+            <Text style={{ marginRight: 10 }}>
+              Availablility: {availabilityTest}
+            </Text>
+            {availability}
+          </View>
+          <Text>{item.description}</Text>
+        </View>
       </ScrollView>
       <View style={styles.bottomContainer}>
         <Left>
           <Text style={styles.price}>$ {item.price}</Text>
         </Left>
         <Right>
-          <Button
-            title="Add"
+          <EasyButton
+            primary
+            medium
             onPress={() => {
               props.addItemToCart(item),
                 Toast.show({
@@ -45,7 +75,9 @@ const SingleProduct = (props) => {
                   text2: "Go to your cart to complete order",
                 });
             }}
-          />
+          >
+            <Text style={styles.textStyle}>Add</Text>
+          </EasyButton>
         </Right>
       </View>
     </Container>
@@ -100,5 +132,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     margin: 20,
     color: "red",
+  },
+  availabilityContainer: {
+    marginBottom: 20,
+    alignItems: "center",
+  },
+  availability: {
+    flexDirection: "row",
   },
 });

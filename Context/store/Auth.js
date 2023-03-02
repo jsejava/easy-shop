@@ -12,27 +12,8 @@ const Auth = (props) => {
   });
   const [showChild, setShowChild] = useState(false);
 
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem("jwt");
-
-      if (value !== null) {
-        if (value) {
-          const decoded = value ? value : "";
-          //console.log("setShowChild", showChild);
-          if (showChild) {
-            dispatch(setCurrentUser(jwt_decode(decoded)));
-          }
-        }
-      }
-    } catch (e) {
-      // error reading value
-    }
-  };
-
   useEffect(() => {
     setShowChild(true);
-    //getData();
 
     if (AsyncStorage.jwt) {
       const decoded = AsyncStorage.jwt ? AsyncStorage.jwt : "";

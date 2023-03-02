@@ -15,6 +15,10 @@ import Main from "./navigators/Main";
 import ProductContainer from "./Screens/Products/ProductContainer";
 import Header from "./Screens/Shared/Header";
 
+LogBox.ignoreLogs([
+  "Non-serializable values were found in the navigation state",
+]);
+
 // LogBox.ignoreLogs(true);
 
 export default function App() {
@@ -24,7 +28,7 @@ export default function App() {
         <NavigationContainer>
           <Header />
           <Main />
-          <Toast ref={(ref) => Toast.setRef(ref)} />
+          <Toast refs={(ref) => Toast.setRef(ref)} />
         </NavigationContainer>
       </Provider>
     </Auth>

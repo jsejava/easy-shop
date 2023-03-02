@@ -19,19 +19,12 @@ export const loginUser = (user, dispatch) => {
     .then((res) => res.json())
     .then((data) => {
       if (data) {
+        //console.log("data => ", data);
         const token = data.token;
+        const user = data.user;
 
         AsyncStorage.setItem("jwt", token);
 
-        // const storeData = async (value) => {
-        //   try {
-        //     await AsyncStorage.setItem("jwt", value);
-        //   } catch (e) {
-        //     // saving error
-        //   }
-        // };
-
-        // storeData(token);
         const decoded = jwt_decode(token);
 
         dispatch(setCurrentUser(decoded, user));
@@ -73,7 +66,7 @@ export const logoutUser = (dispatch) => {
 export const setCurrentUser = (decoded, user) => {
   return {
     type: SET_CURRENT_USER,
-    playload: decoded,
+    payload: decoded,
     userProfile: user,
   };
 };

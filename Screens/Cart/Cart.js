@@ -6,16 +6,20 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../Redux/Actions/cartActions";
 import { Container, H1, Icon, Left, Right } from "native-base";
 import CartItem from "./CartItem";
 import { SwipeListView } from "react-native-swipe-list-view";
+import EasyButton from "../Shared/StyledComponents/EasyButton";
+import AuthGlobal from "../../Context/store/AuthGlobal";
 
 var { height, width } = Dimensions.get("window");
 
 const Cart = (props) => {
+  const context = useContext(AuthGlobal);
+
   var total = 0;
   props.cartItems.forEach((cart) => {
     return (total += cart.product.price);
@@ -52,13 +56,28 @@ const Cart = (props) => {
               <Text style={styles.price}>$ {total}</Text>
             </Left>
             <Right>
-              <Button title="Clear" onPress={() => props.clearCart()}></Button>
+              <EasyButton danger medium onPress={() => props.clearCart()}>
+                <Text style={styles.textStyle}>Clear</Text>
+              </EasyButton>
             </Right>
             <Right>
-              <Button
-                title="Checkout"
-                onPress={() => props.navigation.navigate("Checkout")}
-              ></Button>
+              {context.stateUser.isAuthenticated ? (
+                <EasyButton
+                  primary
+                  medium
+                  onPress={() => props.navigation.navigate("Checkout")}
+                >
+                  <Text style={styles.textStyle}>Checkout</Text>
+                </EasyButton>
+              ) : (
+                <EasyButton
+                  secondary
+                  medium
+                  onPress={() => props.navigation.navigate("Login")}
+                >
+                  <Text style={styles.textStyle}>Login</Text>
+                </EasyButton>
+              )}
             </Right>
           </View>
         </Container>
@@ -92,13 +111,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   ListItem: {
-    alignItems: "center ",
+    alignItems: "center",
     backgroundColor: "white",
     justifyContent: "center",
   },
   body: {
     margin: 10,
-    alignItems: "center ",
+    alignItems: "center",
     flexDirection: "row",
   },
   bottomContainer: {

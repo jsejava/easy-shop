@@ -8,6 +8,7 @@ import axios from "axios";
 import baseURL from "../../assets/common/baseUrl";
 
 import Toast from "react-native-toast-message";
+import EasyButton from "../Shared/StyledComponents/EasyButton";
 
 const Register = (props) => {
   const [email, setEmail] = useState("");
@@ -91,19 +92,26 @@ const Register = (props) => {
         />
         <View style={styles.buttonGroup}>
           {error ? <Error message={error} /> : null}
-          <Button
-            title="Register"
+          <EasyButton
+            large
+            primary
             onPress={() => {
               register();
             }}
-          />
+          >
+            <Text style={styles.textStyle}>Register</Text>
+          </EasyButton>
         </View>
         <View style={[{ marginTop: 40 }, styles.buttonGroup]}>
           <Text style={styles.middleText}>Don't have an account yet?</Text>
-          <Button
-            title="Back To Login"
-            // onPress={() => props.navigation.navigate("Register")}
-          />
+
+          <EasyButton
+            large
+            primary
+            onPress={() => props.navigation.navigate("Login")}
+          >
+            <Text style={styles.textStyle}>Back To Login</Text>
+          </EasyButton>
         </View>
       </FormContainer>
     </KeyboardAwareScrollView>
