@@ -1,9 +1,17 @@
-import { StyleSheet, Text, View, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  SafeAreaView,
+  Image,
+  Dimensions,
+} from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import FormContainer from "../../Screens/Shared/Form/FormContainer";
 import Input from "../../Screens/Shared/Form/Input";
 import Error from "../Shared/Form/Error";
-
+var { height, width } = Dimensions.get("window");
 // Context
 import AuthGlobal from "../../Context/store/AuthGlobal";
 import { loginUser } from "../../Context/actions/Auth.action";
@@ -74,6 +82,13 @@ const Login = (props) => {
           <Text style={styles.textStyle}>Register</Text>
         </EasyButton>
       </View>
+      <View style={styles.header}>
+        <Image
+          source={require("../../assets/cl2.png")}
+          resizeMode="contain"
+          style={{ height: 175 }}
+        />
+      </View>
     </FormContainer>
   );
 };
@@ -88,5 +103,12 @@ const styles = StyleSheet.create({
   middleText: {
     marginBottom: 20,
     alignSelf: "center",
+  },
+  header: {
+    width: "100%",
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "center",
+    marginBottom: width / 20,
   },
 });

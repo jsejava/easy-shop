@@ -76,7 +76,7 @@ const SingleProduct = (props) => {
                 });
             }}
           >
-            <Text style={styles.textStyle}>Add</Text>
+            <Text style={styles.textStyle}>Buy</Text>
           </EasyButton>
         </Right>
       </View>

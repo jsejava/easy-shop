@@ -64,7 +64,7 @@ const Checkout = (props) => {
       extraHeight={200}
       enableOnAndroid={true}
     >
-      <FormContainer title={"Shipping Address"}>
+      <FormContainer title={"Delivery Address"}>
         <Input
           placeholder={"Phone"}
           name={phone}
@@ -72,13 +72,13 @@ const Checkout = (props) => {
           onChangeText={(text) => setPhone(text)}
         />
         <Input
-          placeholder={"Shipping Address 1"}
+          placeholder={"Hostel"}
           name={"ShippingAddress 1"}
           value={address}
           onChangeText={(text) => setAddress(text)}
         />
         <Input
-          placeholder={"Shipping Address 2"}
+          placeholder={"Rooms"}
           name={"ShippingAddress 2"}
           value={address2}
           onChangeText={(text) => setAddress2(text)}
@@ -102,7 +102,7 @@ const Checkout = (props) => {
             iosIcon={<Icon name="arrow-down" color={"#007aff"} />}
             style={{ width: undefined }}
             selectedValue={country}
-            placeholder="Select your country"
+            placeholder="Select your campus"
             placeholderStyle={{ color: "#007aff" }}
             placeholderIconColor="#007aff"
             onValueChange={(e) => setCountry(e)}
@@ -113,7 +113,7 @@ const Checkout = (props) => {
           </Picker>
         </Item>
         <View style={{ width: "80%", alignItems: "center" }}>
-          <Button title="Confirm" onPress={() => chechOut()} />
+          <Button title="Continue" onPress={() => chechOut()} />
         </View>
       </FormContainer>
     </KeyboardAwareScrollView>

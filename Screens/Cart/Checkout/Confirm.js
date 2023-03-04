@@ -53,7 +53,7 @@ const Confirm = (props) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Confirn order</Text>
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Confirm Order</Text>
         {props.route.params ? (
           <View
             style={{
@@ -61,7 +61,7 @@ const Confirm = (props) => {
               borderColor: "orange",
             }}
           >
-            <Text style={styles.title}>Shipping To:</Text>
+            <Text style={styles.title}>Delivery Address</Text>
             <View style={{ padding: 8 }}>
               <Text>Address: {finalOrder.order.order.shippingAdrress1}</Text>
               <Text>Address2: {finalOrder.order.order.shippingAdrress2}</Text>
@@ -69,7 +69,7 @@ const Confirm = (props) => {
               <Text>Zip Code: {finalOrder.order.order.zip}</Text>
               <Text>country: {finalOrder.order.order.country}</Text>
             </View>
-            <Text style={styles.title}>Items:</Text>
+            <Text style={styles.title}>Items</Text>
             {finalOrder.order.order.orderItems.map((x) => {
               return (
                 <ListItem style={styles.ListItem} key={x.product.name} avatar>
@@ -81,7 +81,7 @@ const Confirm = (props) => {
                       <Text>{x.product.name}</Text>
                     </Left>
                     <Right>
-                      <Text>$ {x.product.price}</Text>
+                      <Text>₵ {x.product.price}</Text>
                     </Right>
                   </Body>
                 </ListItem>

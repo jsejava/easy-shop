@@ -16,13 +16,12 @@ import {
 
 const methods = [
   { name: "Cash on Delivery", value: 1 },
-  { name: "Bank Transfer", value: 2 },
-  { name: "Card Payment", value: 3 },
+  { name: "Campus Pay", value: 2 },
+  { name: "Mobile Money", value: 3 },
 ];
 const PaymentCards = [
-  { name: "Wallet", value: 1 },
-  { name: "Visa", value: 2 },
-  { name: "Other", value: 3 },
+  { name: "MTN", value: 1 },
+  { name: "Vodaphone-Cash", value: 2 },
 ];
 
 const Payment = (props) => {
@@ -67,7 +66,7 @@ const Payment = (props) => {
         ) : null}
         <View style={{ marginTop: 60, alignSelf: "center" }}>
           <Button
-            title={"Confirn"}
+            title={"Continue"}
             onPress={() => props.navigation.navigate("Confirm", { order })}
           />
         </View>

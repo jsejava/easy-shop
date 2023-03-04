@@ -29,7 +29,7 @@ const Cart = (props) => {
     <>
       {props.cartItems.length ? (
         <Container>
-          <H1 style={{ alignSelf: "center" }}>Cart</H1>
+          <H1 style={{ alignSelf: "center" }}>Campus Basket</H1>
           <SwipeListView
             data={props.cartItems}
             renderItem={(data) => <CartItem item={data} />}
@@ -83,8 +83,8 @@ const Cart = (props) => {
         </Container>
       ) : (
         <Container style={styles.emptyContainer}>
-          <Text>Looks Like your cart is empty</Text>
-          <Text>Add products to your cart to get started </Text>
+          <Text>Your campus basket is empty</Text>
+          <Text>Add products to your campus basket to get started </Text>
         </Container>
       )}
     </>
