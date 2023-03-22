@@ -8,8 +8,8 @@ import {
   Dimensions,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
-import FormContainer from "../../Screens/Shared/Form/FormContainer";
-import Input from "../../Screens/Shared/Form/Input";
+import FormContainer from "../Shared/Form/FormContainer";
+import Input from "../Shared/Form/Input";
 import Error from "../Shared/Form/Error";
 var { height, width } = Dimensions.get("window");
 // Context
@@ -17,7 +17,7 @@ import AuthGlobal from "../../Context/store/AuthGlobal";
 import { loginUser } from "../../Context/actions/Auth.action";
 import EasyButton from "../Shared/StyledComponents/EasyButton";
 
-const Login = (props) => {
+const CheckoutLogin = (props) => {
   const context = useContext(AuthGlobal);
   const [ID, setID] = useState("");
   const [email, setEmail] = useState("");
@@ -27,7 +27,8 @@ const Login = (props) => {
   useEffect(() => {
     //console.log(context.stateUser.isAuthenticated);
     if (context.stateUser.isAuthenticated === true) {
-      props.navigation.navigate("User Profile");
+      props.navigation.navigate("Checkout");
+    } else {
     }
   }, [context.stateUser.isAuthenticated]);
 
@@ -39,12 +40,13 @@ const Login = (props) => {
     if (ID === "" || password === "") {
       setError("Please fill in your credentials");
     } else {
+      props.navigation.navigate("Checkout");
       loginUser(user, context.dispatch);
     }
   };
 
   return (
-    <FormContainer title={"Login"}>
+    <FormContainer title={"Login to checkout"}>
       <Input
         placeholder={"Enter ID Nber"}
         name={"ID"}
@@ -52,7 +54,13 @@ const Login = (props) => {
         value={ID}
         onChangeText={(text) => setID(text.toLocaleUpperCase())}
       />
-
+      {/* <Input
+        placeholder={"Enter Email"}
+        name={"email"}
+        id={"email"}
+        value={email}
+        onChangeText={(text) => setEmail(text.toLocaleLowerCase())}
+      /> */}
       <Input
         placeholder={"Enter Password"}
         name={"password"}
@@ -99,7 +107,7 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default CheckoutLogin;
 
 const styles = StyleSheet.create({
   buttonGroup: {

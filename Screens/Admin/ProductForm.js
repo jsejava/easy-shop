@@ -40,6 +40,7 @@ const ProductForm = (props) => {
   const [item, setItem] = useState(null);
 
   useEffect(() => {
+    //console.log(props.route.params.item.category._id);
     if (!props.route.params) {
       setItem(null);
     } else {
@@ -94,16 +95,71 @@ const ProductForm = (props) => {
   };
 
   const addProduct = () => {
-    if (
-      name == "" ||
-      brand == "" ||
-      price == "" ||
-      description == "" ||
-      category == "" ||
-      countInStock == ""
-    ) {
-      setError("Please fill in the form correctly");
+    if (!image) {
+      Toast.show({
+        topOffset: 60,
+        type: "error",
+        text1: "Please Select Add a Product Image",
+        text2: "",
+      });
+      return;
     }
+    if (!brand) {
+      Toast.show({
+        topOffset: 60,
+        type: "error",
+        text1: "Please Select Add a Product brand",
+        text2: "",
+      });
+      return;
+    }
+    if (!name) {
+      Toast.show({
+        topOffset: 60,
+        type: "error",
+        text1: "Please Select Add a Product Name",
+        text2: "",
+      });
+      return;
+    }
+
+    if (!price) {
+      Toast.show({
+        topOffset: 60,
+        type: "error",
+        text1: "Please Check Your Price Value",
+        text2: "",
+      });
+      return;
+    }
+    if (!countInStock) {
+      Toast.show({
+        topOffset: 60,
+        type: "error",
+        text1: `Please Check Your CountInStock value`,
+        text2: "",
+      });
+      return;
+    }
+    if (!description) {
+      Toast.show({
+        topOffset: 60,
+        type: "error",
+        text1: `Please Add Product Description`,
+        text2: "",
+      });
+      return;
+    }
+    if (!category) {
+      Toast.show({
+        topOffset: 60,
+        type: "error",
+        text1: `Please Select Product category`,
+        text2: "",
+      });
+      return;
+    }
+
     let formData = new FormData();
 
     const newImageUri = "file:///" + image.split("file:/").join("");
@@ -133,8 +189,9 @@ const ProductForm = (props) => {
       },
     };
 
-    // toSolve => categories set to underfine when trying to update
     if (item !== null) {
+      // edit product
+      // not able to get req.body in backend
       axios
         .put(`${baseURL}products/${item.id}`, formData, config)
         .then((res) => {
@@ -160,6 +217,7 @@ const ProductForm = (props) => {
           });
         });
     } else {
+      // add product
       axios
         .post(`${baseURL}products`, formData, config)
         .then((res) => {
@@ -180,6 +238,7 @@ const ProductForm = (props) => {
             topOffset: 60,
             type: "error",
             text1: "Something went wrong",
+            //text1: { error },
             text2: "Please try again",
           });
         });
@@ -223,7 +282,7 @@ const ProductForm = (props) => {
         name="Price"
         id="Price"
         value={price}
-        keyboardText={"numeric"}
+        keyboardType="numeric"
         onChangeText={(text) => setPrice(text)}
       />
       <View style={styles.label}>
@@ -234,7 +293,7 @@ const ProductForm = (props) => {
         name="Stock"
         id="Stock"
         value={countInStock}
-        keyboardText={"numeric"}
+        keyboardType="numeric"
         onChangeText={(text) => setCountInStock(text)}
       />
       <View style={styles.label}>
@@ -247,16 +306,19 @@ const ProductForm = (props) => {
         value={description}
         onChangeText={(text) => setDescription(text)}
       />
+
       <Item picker>
         <Picker
           mode="dropdown"
           iosIcon={<Icon color={"#007aff"} name="arrow-down" />}
-          style={{ width: undefined }}
+          //style={{ width: undefined }}
+          //placeholder="Select your Category"
           placeholder="Select your Category"
           selectedValue={pickerValue}
           placeholderStyle={{ color: "#007aff" }}
           placeholderIconColor="#007aff"
           onValueChange={(e) => [setPickerValue(e), setCategory(e)]}
+          style={styles.picker}
         >
           {categories
             ? categories.map((c) => {
@@ -265,7 +327,7 @@ const ProductForm = (props) => {
             : null}
         </Picker>
       </Item>
-      {err ? <Error message={err} /> : null}
+
       <View>
         <EasyButton large primary onPress={() => addProduct()}>
           <Text style={styles.buttonText}>Confirm</Text>
@@ -309,5 +371,15 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 100,
     elevation: 20,
+  },
+  picker: {
+    width: 310,
+    height: 60,
+    backgroundColor: "white",
+    margin: 10,
+    borderRadius: 20,
+    padding: 10,
+    borderWidth: 2,
+    borderColor: "orange",
   },
 });

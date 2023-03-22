@@ -28,6 +28,7 @@ const ProductCard = (props) => {
             : "https://cdn.pixabay.com/photo/2012/04/02/17/46/package-25067_1280.png",
         }}
       />
+
       <View style={styles.card} />
       <Text style={styles.title}>
         {name.length > 15 ? name.substring(0, 15 - 3) + "..." : name}

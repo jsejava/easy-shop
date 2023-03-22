@@ -3,7 +3,7 @@ import Swiper from "react-native-swiper/src";
 import React, { useEffect, useState } from "react";
 var { width } = Dimensions.get("window");
 
-const Banner = () => {
+const Banner = ({ item }) => {
   const [bannerData, setBannerData] = useState([]);
   useEffect(() => {
     setBannerData([
@@ -27,13 +27,14 @@ const Banner = () => {
             autoplay={true}
             autoplayTimeout={2}
           >
-            {bannerData.map((item) => {
+            {item.map((item) => {
               return (
+                //console.log(item),
                 <Image
                   key={item}
                   style={styles.imageBanner}
                   resizeMode="contain"
-                  source={{ uri: item }}
+                  source={{ uri: item.image }}
                 />
               );
             })}

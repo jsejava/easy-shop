@@ -121,7 +121,7 @@ const ProductContainer = (props) => {
             <ScrollView>
               <View>
                 <View>
-                  <Banner />
+                  <Banner item={products} />
                 </View>
                 <View>
                   <CategoryFilter
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     backgroundColor: "gainsboro",
   },
   listContainer: {
-    height: height,
+    height: "100%",
     flex: 1,
     flexDirection: "row",
     alignItems: "flex-start",

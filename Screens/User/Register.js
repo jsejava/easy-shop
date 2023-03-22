@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import FormContainer from "../../Screens/Shared/Form/FormContainer";
 import Input from "../../Screens/Shared/Form/Input";
@@ -6,11 +6,12 @@ import Error from "../Shared/Form/Error";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import axios from "axios";
 import baseURL from "../../assets/common/baseUrl";
-
+var { height, width } = Dimensions.get("window");
 import Toast from "react-native-toast-message";
 import EasyButton from "../Shared/StyledComponents/EasyButton";
 
 const Register = (props) => {
+  const [ID, setID] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -18,10 +19,11 @@ const Register = (props) => {
   const [error, setError] = useState("");
 
   const register = () => {
-    if (email === "" || password === "" || phone === "" || password === "") {
+    if (ID === "" || password === "" || phone === "" || name === "") {
       setError("Please fill in the form correctly");
     }
     let user = {
+      ID: ID,
       name: name,
       email: email,
       password: password,
@@ -62,18 +64,11 @@ const Register = (props) => {
     >
       <FormContainer title={"Register"}>
         <Input
-          placeholder={"Enter Email"}
-          name={"email"}
-          id={"email"}
-          value={email}
-          onChangeText={(text) => setEmail(text.toLocaleLowerCase())}
-        />
-        <Input
-          placeholder={"Name"}
-          name={"name"}
-          id={"name"}
-          value={name}
-          onChangeText={(text) => setName(text.toLocaleLowerCase())}
+          placeholder={"Enter ID Nber"}
+          name={"ID"}
+          id={"ID"}
+          value={ID}
+          onChangeText={(text) => setID(text.toLocaleUpperCase())}
         />
         <Input
           placeholder={"Phone Number"}
@@ -82,6 +77,21 @@ const Register = (props) => {
           value={phone}
           onChangeText={(text) => setPhone(text)}
         />
+        <Input
+          placeholder={"Name"}
+          name={"name"}
+          id={"name"}
+          value={name}
+          onChangeText={(text) => setName(text)}
+        />
+
+        {/* <Input
+          placeholder={"Enter Email"}
+          name={"email"}
+          id={"email"}
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+        /> */}
         <Input
           placeholder={"Enter Password"}
           name={"password"}
@@ -113,6 +123,13 @@ const Register = (props) => {
             <Text style={styles.textStyle}>Back To Login</Text>
           </EasyButton>
         </View>
+        <View style={styles.header}>
+          <Image
+            source={require("../../assets/campus-logo-2.png")}
+            resizeMode="contain"
+            style={{ height: 100 }}
+          />
+        </View>
       </FormContainer>
     </KeyboardAwareScrollView>
   );
@@ -128,5 +145,12 @@ const styles = StyleSheet.create({
   middleText: {
     marginBottom: 20,
     alignSelf: "center",
+  },
+  header: {
+    width: "100%",
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "center",
+    marginBottom: width / 20,
   },
 });

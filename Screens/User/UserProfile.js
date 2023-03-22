@@ -14,6 +14,7 @@ const UserProfile = (props) => {
   const context = useContext(AuthGlobal);
   const [userProfile, setUserProfile] = useState();
   const [orders, setOrders] = useState();
+  //console.log("orders", orders);
 
   useFocusEffect(
     useCallback(() => {
@@ -23,6 +24,8 @@ const UserProfile = (props) => {
         context.stateUser.isAuthenticated === null
       ) {
         props.navigation.navigate("Login");
+
+        return;
       }
       AsyncStorage.getItem("jwt")
         .then((res) => {
@@ -40,7 +43,9 @@ const UserProfile = (props) => {
           const userOrders = data.filter(
             (order) => order.user._id === context.stateUser.user.userId
           );
+
           setOrders(userOrders);
+          //console.log("data", data);
         })
         .catch((error) => console.log(error));
 
@@ -59,7 +64,7 @@ const UserProfile = (props) => {
         </Text>
         <View style={{ marginTop: 20 }}>
           <Text style={{ margin: 10 }}>
-            Email: {userProfile ? userProfile.email : ""}
+            ID Nber: {userProfile ? userProfile.ID : ""}
           </Text>
           <Text style={{ margin: 10 }}>
             Phone: {userProfile ? userProfile.phone : ""}
@@ -104,7 +109,7 @@ const styles = StyleSheet.create({
     marginTop: 60,
   },
   order: {
-    margin: 20,
+    margin: 10,
     alignItems: "center",
     marginBottom: 60,
   },

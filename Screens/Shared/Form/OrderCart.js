@@ -59,17 +59,14 @@ const OrderCart = (props) => {
     };
 
     const order = {
-      city: props.city,
-      country: props.country,
+      name: props.name,
+      hostel: props.hostel,
+      room: props.room,
       dateOrdered: props.dateOrdered,
       id: props.id,
       orderItems: props.orderItems,
-      phone: props.phone,
-      shippingAddress1: props.shippingAddress1,
-      shippingAddress2: props.shippingAddress2,
       status: statusChange,
       user: props.user,
-      zip: props.zip,
     };
 
     axios
@@ -98,6 +95,27 @@ const OrderCart = (props) => {
       });
   };
 
+  const deleteOrder = (id) => {
+    axios
+      .delete(`${baseURL}orders/${props.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        if (res.status == 200 || res.status == 201) {
+          Toast.show({
+            topOffset: 60,
+            type: "success",
+            text1: "Order deleted",
+            text2: "",
+          });
+          setTimeout(() => {
+            props.navigation.navigate("Products");
+          }, 500);
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <View style={[{ backgroundColor: cardColor }, styles.container]}>
       <View style={styles.container}>
@@ -108,9 +126,9 @@ const OrderCart = (props) => {
           Status: {statusText} {orderStatus}
         </Text>
         <Text>
-          Address: {props.shippingAddress1} {props.shippingAddress2}
+          Address: {props.hostel} Room {props.room}
         </Text>
-        <Text>City: {props.country}</Text>
+        <Text>Name: {props.user.name}</Text>
 
         <Text>Date Ordered: {props.dateOrdered.split("T")[0]}</Text>
         <View style={styles.priceContainer}>
@@ -133,8 +151,21 @@ const OrderCart = (props) => {
                 );
               })}
             </Picker>
-            <EasyButton secondary large onPress={() => UpdateOrder()}>
+            <EasyButton
+              secondary
+              medium
+              onPress={() => UpdateOrder()}
+              style={{ borderRadius: 50 }}
+            >
               <Text style={{ color: "white" }}>Update</Text>
+            </EasyButton>
+            <EasyButton
+              secondary
+              medium
+              style={{ borderRadius: 50 }}
+              onPress={() => deleteOrder()}
+            >
+              <Text style={{ color: "white" }}>Delete</Text>
             </EasyButton>
           </View>
         ) : null}
@@ -147,9 +178,9 @@ export default OrderCart;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-    margin: 10,
-    borderRadius: 10,
+    padding: 10,
+    margin: 5,
+    // borderRadius: 50,
   },
   title: {
     backgroundColor: "#62B1F6",

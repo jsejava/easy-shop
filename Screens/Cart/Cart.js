@@ -29,7 +29,7 @@ const Cart = (props) => {
     <>
       {props.cartItems.length ? (
         <Container>
-          <H1 style={{ alignSelf: "center" }}>Campus Basket</H1>
+          <H1 style={{ alignSelf: "center" }}>basket</H1>
           <SwipeListView
             data={props.cartItems}
             renderItem={(data) => <CartItem item={data} />}
@@ -73,7 +73,7 @@ const Cart = (props) => {
                 <EasyButton
                   secondary
                   medium
-                  onPress={() => props.navigation.navigate("Login")}
+                  onPress={() => props.navigation.navigate("CheckoutLogin")}
                 >
                   <Text style={styles.textStyle}>Login</Text>
                 </EasyButton>
